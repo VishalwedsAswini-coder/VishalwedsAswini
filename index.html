@@ -32,7 +32,7 @@
   /* ============ ENVELOPE INTRO ============ */
   #envelope-intro {
     position: fixed; inset: 0; z-index: 9999;
-    background: var(--maroon-deep) url("images/Compressed%20images/Royal%20maroon%20and%20gold%20wedding%20backdrop.png") center / cover no-repeat;
+    background: var(--maroon-deep) url("source/images/Compressed%20images/Royal%20maroon%20and%20gold%20wedding%20backdrop.png") center / cover no-repeat;
     display: flex; align-items: center; justify-content: center; flex-direction: column;
     transition: opacity 0.55s ease, visibility 0.55s ease;
     overflow: hidden;
@@ -281,7 +281,7 @@
   /* ============ COUNTDOWN ============ */
   #countdown {
     background: var(--maroon);
-    background-image: url("images/Compressed%20images/Muted%20burgundy%20heart%20pattern.png");
+    background-image: url("source/images/Compressed%20images/Muted%20burgundy%20heart%20pattern.png");
     background-size: cover; background-position: center; background-repeat: no-repeat;
     color: #fff; padding: 5rem 1.5rem;
     position: relative; overflow: hidden;
@@ -334,7 +334,7 @@
     box-shadow: 0 15px 50px rgba(0,0,0,0.15);
   }
   .invitation-front {
-    background: var(--maroon) url("images/Compressed%20images/Muted%20burgundy%20heart%20pattern.png") center / cover no-repeat;
+    background: var(--maroon) url("source/images/Compressed%20images/Muted%20burgundy%20heart%20pattern.png") center / cover no-repeat;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     padding: 2rem; border: 2px solid var(--gold-light);
   }
@@ -511,7 +511,7 @@
 
   /* ============ FOOTER ============ */
   footer {
-    background: var(--maroon-deep) url("images/Compressed%20images/Muted%20burgundy%20heart%20pattern.png") center / cover no-repeat;
+    background: var(--maroon-deep) url("source/images/Compressed%20images/Muted%20burgundy%20heart%20pattern.png") center / cover no-repeat;
     color: rgba(255,248,231,0.7);
     text-align: center; padding: 4rem 2rem;
     position: relative; overflow: hidden;
@@ -570,7 +570,7 @@
   /* ============ RESPONSIVE ============ */
   @media(max-width:768px){
     #envelope-intro {
-      background-image: url("images/Compressed%20images/Elegant%20maroon%20and%20antique%20gold%20wedding%20scrollwork.png");
+      background-image: url("source/images/Compressed%20images/Elegant%20maroon%20and%20antique%20gold%20wedding%20scrollwork.png");
       background-position: center;
       background-size: cover;
     }
@@ -614,7 +614,7 @@
       </svg>
     </div>
     <div class="envelope-seal">
-      <img src="images/Compressed%20images/Antique%20gold%20V%26A%20wedding%20seal.png" alt="Antique gold V&amp;A wedding seal">
+      <img src="source/images/Compressed%20images/Antique%20gold%20V%26A%20wedding%20seal.png" alt="Antique gold V&amp;A wedding seal">
     </div>
   </div>
   <button class="enter-btn" id="enter-site" type="button">Tap to Open Invitation</button>
@@ -643,8 +643,8 @@
 <!-- HERO -->
 <div id="hero">
   <picture>
-    <source media="(max-width: 600px)" srcset="images/Compressed%20images/Golden%20sunset%20temple%20wedding%20invitation%20%281%29.png">
-    <img class="hero-invitation" src="images/Compressed%20images/Golden%20Temple%20Wedding%20Invitation.png" alt="Golden Temple wedding invitation for Dr. S. Vishal and Dr. M. Ashwini">
+    <source id="mobile-hero-source" media="(max-width: 600px)" srcset="source/images/Compressed%20images/V1.png">
+    <img class="hero-invitation" src="source/images/Compressed%20images/Golden%20Temple%20Wedding%20Invitation.png" alt="Golden Temple wedding invitation for Dr. S. Vishal and Dr. M. Ashwini">
   </picture>
   <div class="scroll-hint">Scroll Down</div>
 </div>
@@ -680,7 +680,7 @@
           <p>Tap to open</p>
         </div>
         <div class="invitation-back">
-          <img src="images/Compressed%20images/V%26A%20BACK%20PG.png" alt="Wedding invitation for Dr. S. Vishal and Dr. M. Aswini, including family names, reception and wedding timings, and venue">
+          <img src="source/images/Compressed%20images/V%26A%20BACK%20PG.png" alt="Wedding invitation for Dr. S. Vishal and Dr. M. Aswini, including family names, reception and wedding timings, and venue">
         </div>
       </div>
     </div>
@@ -750,7 +750,7 @@
 
 <!-- BACKGROUND MUSIC -->
 <audio id="bg-music" loop preload="auto">
-  <source src="music/BG.mp3" type="audio/mpeg">
+  <source src="source/music/Once%20More%20Teaser%20Theme%20%28From%20Once%20More%20%29.mp3" type="audio/mpeg">
 </audio>
 
 <!-- MUSIC TOGGLE -->
@@ -877,7 +877,25 @@
   window.scrollTo(0, 0);
   document.documentElement.style.scrollBehavior = originalScrollBehavior;
 
-  // ===== COUNTDOWN WITH FLIP ANIMATION =====
+    // ===== MOBILE HERO IMAGE ROTATION =====
+  const mobileHeroSource = document.getElementById('mobile-hero-source');
+  const mobileHeroImages = [
+    'source/images/Compressed%20images/V1.png',
+    'source/images/Compressed%20images/v2.png'
+  ];
+
+  function updateMobileHeroImage() {
+    const hourSlot = Math.floor(Date.now() / 3600000);
+    mobileHeroSource.srcset = mobileHeroImages[hourSlot % mobileHeroImages.length];
+  }
+
+  updateMobileHeroImage();
+  window.setTimeout(function() {
+    updateMobileHeroImage();
+    window.setInterval(updateMobileHeroImage, 3600000);
+  }, 3600000 - (Date.now() % 3600000));
+
+// ===== COUNTDOWN WITH FLIP ANIMATION =====
   const wedding = new Date('2026-11-20T10:30:00+05:30');
   const cdLabel = document.querySelector('.cd-label');
   const cdTitle = document.querySelector('.cd-title');
